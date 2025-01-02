@@ -22,8 +22,18 @@ export function BreathingGraph({ technique, isActive, progress }: BreathingGraph
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Set canvas size with higher resolution for retina displays
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    // Scale the context for retina displays
+    ctx.scale(dpr, dpr);
 
     drawBreathingGraph({
       ctx,
@@ -37,9 +47,8 @@ export function BreathingGraph({ technique, isActive, progress }: BreathingGraph
   return (
     <canvas 
       ref={canvasRef}
-      width={800}
-      height={300}
-      className="w-full h-[300px] bg-white rounded-lg shadow-inner"
+      style={{ width: '100%', height: '300px' }}
+      className="rounded-lg bg-black/30 backdrop-blur-sm"
     />
   );
 }

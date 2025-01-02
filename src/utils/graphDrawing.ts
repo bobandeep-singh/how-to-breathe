@@ -15,12 +15,14 @@ export function drawBreathingGraph({
   currentPoint,
   isActive
 }: DrawBreathingGraphProps) {
-  // Clear canvas
+  // Clear canvas with fully transparent background
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Set up graph styles
-  ctx.strokeStyle = '#4F46E5';
-  ctx.lineWidth = 3;
+  // Set up graph styles with glowing effect
+  ctx.strokeStyle = '#FFFFFF';
+  ctx.lineWidth = 4;
+  ctx.shadowColor = '#EAB308';
+  ctx.shadowBlur = 15;
   
   // Draw the breathing line
   ctx.beginPath();
@@ -33,11 +35,21 @@ export function drawBreathingGraph({
   });
   ctx.stroke();
   
-  // Draw the progress dot
+  // Draw the progress dot with glow
   if (isActive) {
-    ctx.fillStyle = '#4F46E5';
+    ctx.fillStyle = '#EAB308';
+    ctx.shadowColor = '#FFFFFF';
+    ctx.shadowBlur = 20;
     ctx.beginPath();
-    ctx.arc(currentPoint.x, currentPoint.y, 8, 0, Math.PI * 2);
+    ctx.arc(currentPoint.x, currentPoint.y, 10, 0, Math.PI * 2);
     ctx.fill();
+
+    // Add a white border to the dot
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 2;
+    ctx.stroke();
   }
+
+  // Reset shadow
+  ctx.shadowBlur = 0;
 }

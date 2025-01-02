@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ArrowLeft, Play, Pause, StopCircle } from 'lucide-react';
 import { BreathingTechnique } from '../types/breathing';
 import { BreathingGraph } from './BreathingGraph';
@@ -41,24 +41,28 @@ export function ExerciseView({ technique, onBack }: ExerciseViewProps) {
     <div className="max-w-4xl mx-auto p-6">
       <button
         onClick={onBack}
-        className="flex items-center text-gray-600 hover:text-gray-800 mb-6"
+        className="flex items-center text-white/80 hover:text-white mb-6 transition-colors"
       >
         <ArrowLeft className="mr-2" /> Back to techniques
       </button>
 
-      <h2 className="text-3xl font-bold text-gray-800 mb-4">{technique.name}</h2>
-      <p className="text-gray-600 mb-6">{technique.description}</p>
+      <h2 className="text-3xl font-bold text-white mb-4 flex items-center">
+        <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+          {technique.name}
+        </span>
+      </h2>
+      <p className="text-white/80 mb-6">{technique.description}</p>
 
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-        <h3 className="text-xl font-semibold mb-4">Instructions</h3>
+      <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-lg p-6 mb-8 border border-white/20">
+        <h3 className="text-xl font-semibold mb-4 text-yellow-400">Instructions</h3>
         <ol className="list-decimal list-inside space-y-2">
           {technique.instructions.map((instruction, index) => (
-            <li key={index} className="text-gray-700">{instruction}</li>
+            <li key={index} className="text-white/80">{instruction}</li>
           ))}
         </ol>
       </div>
 
-      <div className="mb-8">
+      <div className="mb-8 breathing-canvas p-4">
         <BreathingGraph 
           technique={technique}
           isActive={isActive}
@@ -66,11 +70,11 @@ export function ExerciseView({ technique, onBack }: ExerciseViewProps) {
         />
       </div>
 
-      <div className="flex justify-between items-center mb-8">
-        <div className="text-2xl font-mono">
+      <div className="flex justify-between items-center mb-8 bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-white/20">
+        <div className="text-2xl font-mono text-yellow-400">
           Time: {formatTime(elapsedTime)}
         </div>
-        <div className="text-2xl font-mono">
+        <div className="text-2xl font-mono text-yellow-400">
           Cycles: {cycles}
         </div>
       </div>
@@ -79,7 +83,7 @@ export function ExerciseView({ technique, onBack }: ExerciseViewProps) {
         {!isActive ? (
           <button
             onClick={() => setIsActive(true)}
-            className="flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            className="flex items-center px-6 py-3 bg-yellow-500 text-deep-indigo rounded-lg hover:bg-yellow-400 transition-colors font-semibold"
           >
             <Play className="mr-2" /> Start
           </button>
@@ -87,13 +91,13 @@ export function ExerciseView({ technique, onBack }: ExerciseViewProps) {
           <>
             <button
               onClick={() => setIsPaused(!isPaused)}
-              className="flex items-center px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
+              className="flex items-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-500 transition-colors font-semibold"
             >
               <Pause className="mr-2" /> {isPaused ? 'Resume' : 'Pause'}
             </button>
             <button
               onClick={reset}
-              className="flex items-center px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              className="flex items-center px-6 py-3 bg-red-600/80 text-white rounded-lg hover:bg-red-500 transition-colors font-semibold"
             >
               <StopCircle className="mr-2" /> Stop
             </button>
