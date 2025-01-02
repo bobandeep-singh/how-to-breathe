@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --royal-purple: #4A1D96;
+  --royal-gold: #EAB308;
+  --calm-blue: #E0E7FF;
+  --deep-indigo: #312E81;
+}
+
+body {
+  background: linear-gradient(135deg, var(--royal-purple) 0%, var(--deep-indigo) 100%);
+  min-height: 100vh;
+  color: #E5E7EB;
+}
+
+.breathing-canvas {
+  position: relative;
+  background-image: url('/src/resources/images/MonkWithShiva.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.breathing-canvas::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+}
