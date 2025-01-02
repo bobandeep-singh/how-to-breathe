@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { ArrowLeft, Play, Pause, StopCircle } from 'lucide-react';
 import { BreathingTechnique } from '../types/breathing';
 import { BreathingGraph } from './BreathingGraph';
+import { useBreathingTimer } from '../hooks/useBreathingTimer';
 
 interface ExerciseViewProps {
   technique: BreathingTechnique;
@@ -11,41 +12,24 @@ interface ExerciseViewProps {
 export function ExerciseView({ technique, onBack }: ExerciseViewProps) {
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [cycles, setCycles] = useState(0);
-  const [timer, setTimer] = useState(0);
-
-  const totalTime = technique.timing.inhale + technique.timing.hold + technique.timing.exhale;
+  
+  const { 
+    progress, 
+    elapsedTime,
+    reset: resetTimer 
+  } = useBreathingTimer({
+    technique,
+    isActive: isActive && !isPaused,
+    onCycleComplete: () => setCycles(c => c + 1)
+  });
 
   const reset = useCallback(() => {
     setIsActive(false);
     setIsPaused(false);
-    setProgress(0);
     setCycles(0);
-    setTimer(0);
-  }, []);
-
-  useEffect(() => {
-    let interval: number | null = null;
-
-    if (isActive && !isPaused) {
-      interval = window.setInterval(() => {
-        setProgress((prev) => {
-          const newProgress = prev + 0.01;
-          if (newProgress >= 1) {
-            setCycles((c) => c + 1);
-            return 0;
-          }
-          return newProgress;
-        });
-        setTimer((t) => t + 10);
-      }, 10);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isActive, isPaused]);
+    resetTimer();
+  }, [resetTimer]);
 
   const formatTime = (ms: number) => {
     const seconds = Math.floor(ms / 1000);
@@ -84,7 +68,7 @@ export function ExerciseView({ technique, onBack }: ExerciseViewProps) {
 
       <div className="flex justify-between items-center mb-8">
         <div className="text-2xl font-mono">
-          Time: {formatTime(timer)}
+          Time: {formatTime(elapsedTime)}
         </div>
         <div className="text-2xl font-mono">
           Cycles: {cycles}
