@@ -16,10 +16,12 @@ export function calculateBreathingPoints({
   const points: GraphPoint[] = [];
   const totalTime = technique.timing.inhale + technique.timing.hold + technique.timing.exhale;
   const centerY = canvasHeight / 2;
-  const amplitude = canvasHeight / 3;
+  const amplitude = canvasHeight * 0.4; // Increased amplitude for better visibility
+  const padding = canvasWidth * 0.1; // Add padding on sides
+  const usableWidth = canvasWidth - (padding * 2);
 
   for (let i = 0; i <= steps; i++) {
-    const x = (canvasWidth * i) / steps;
+    const x = padding + (usableWidth * i) / steps;
     let y = centerY;
     
     const t = (i / steps) * totalTime;

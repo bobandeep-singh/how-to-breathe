@@ -1,4 +1,4 @@
-import { BreathingTechnique } from '../types/breathing';
+import { BreathingTechnique, Category } from '../types/breathing';
 
 export const breathingTechniques: BreathingTechnique[] = [
   {
@@ -24,6 +24,7 @@ export const breathingTechniques: BreathingTechnique[] = [
       'Manages food cravings',
       'Improves emotional regulation',
     ],
+    categories: ['relax', 'sleep', 'stress']
   },
   {
     id: 'diaphragmatic',
@@ -46,6 +47,7 @@ export const breathingTechniques: BreathingTechnique[] = [
       'Lowers blood pressure',
       'Improves core stability',
     ],
+    categories: ['relax', 'focus', 'energy']
   },
   {
     id: 'pursed-lip',
@@ -68,6 +70,7 @@ export const breathingTechniques: BreathingTechnique[] = [
       'Improves breathing pattern',
       'Reduces shortness of breath',
     ],
+    categories: ['relax', 'stress']
   },
   {
     id: 'box',
@@ -92,5 +95,63 @@ export const breathingTechniques: BreathingTechnique[] = [
       'Improves concentration',
       'Manages emotional responses',
     ],
+    categories: ['focus', 'performance', 'stress']
   },
+];
+
+export const categories: Category[] = [
+  {
+    id: 'relax',
+    name: 'Breathe to Relax',
+    description: 'Calm your mind and body with these soothing breathing techniques',
+    icon: 'Clouds',
+    techniques: breathingTechniques
+      .filter(t => t.categories.includes('relax'))
+      .map(t => t.id)
+  },
+  {
+    id: 'focus',
+    name: 'Breathe to Focus',
+    description: 'Enhance your concentration and mental clarity',
+    icon: 'Target',
+    techniques: breathingTechniques
+      .filter(t => t.categories.includes('focus'))
+      .map(t => t.id)
+  },
+  {
+    id: 'stress',
+    name: 'Breathe for Stress Relief',
+    description: 'Release tension and manage stress effectively',
+    icon: 'Sparkles',
+    techniques: breathingTechniques
+      .filter(t => t.categories.includes('stress'))
+      .map(t => t.id)
+  },
+  {
+    id: 'sleep',
+    name: 'Breathe for Better Sleep',
+    description: 'Prepare your mind and body for restful sleep',
+    icon: 'Moon',
+    techniques: breathingTechniques
+      .filter(t => t.categories.includes('sleep'))
+      .map(t => t.id)
+  },
+  {
+    id: 'energy',
+    name: 'Breathe for Energy',
+    description: 'Boost your energy levels and vitality',
+    icon: 'Zap',
+    techniques: breathingTechniques
+      .filter(t => t.categories.includes('energy'))
+      .map(t => t.id)
+  },
+  {
+    id: 'performance',
+    name: 'Breathe for Performance',
+    description: 'Optimize your physical and mental performance',
+    icon: 'Trophy',
+    techniques: breathingTechniques
+      .filter(t => t.categories.includes('performance'))
+      .map(t => t.id)
+  }
 ];

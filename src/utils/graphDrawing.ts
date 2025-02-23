@@ -6,24 +6,34 @@ interface DrawBreathingGraphProps {
   points: GraphPoint[];
   currentPoint: GraphPoint;
   isActive: boolean;
+  width: number;
+  height: number;
 }
 
 export function drawBreathingGraph({
   ctx,
-  canvas,
   points,
   currentPoint,
-  isActive
+  isActive,
+  width,
+  height
 }: DrawBreathingGraphProps) {
   // Clear canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, width, height);
 
-  // Set up graph styles
-  ctx.strokeStyle = '#4F46E5';
-  ctx.lineWidth = 3;
+  // Set up graph styles with glowing effect
+  ctx.strokeStyle = '#FFFFFF';
+  ctx.lineWidth = 4; // Increased line width for better visibility
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.shadowColor = '#EAB308';
+  ctx.shadowBlur = 15;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 0;
   
   // Draw the breathing line
   ctx.beginPath();
+  
   points.forEach((point, index) => {
     if (index === 0) {
       ctx.moveTo(point.x, point.y);
@@ -31,13 +41,24 @@ export function drawBreathingGraph({
       ctx.lineTo(point.x, point.y);
     }
   });
+  
   ctx.stroke();
   
-  // Draw the progress dot
+  // Draw the progress dot with glow
   if (isActive) {
-    ctx.fillStyle = '#4F46E5';
+    ctx.fillStyle = '#EAB308';
+    ctx.shadowColor = '#FFFFFF';
+    ctx.shadowBlur = 20;
     ctx.beginPath();
     ctx.arc(currentPoint.x, currentPoint.y, 8, 0, Math.PI * 2);
     ctx.fill();
+
+    // Add a white border to the dot
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 2;
+    ctx.stroke();
   }
+
+  // Reset shadow
+  ctx.shadowBlur = 0;
 }

@@ -23,8 +23,8 @@ export function useBreathingAnimation({
   }), [technique, canvasWidth, canvasHeight]);
 
   const currentPoint = useMemo(() => {
-    const index = Math.floor(progress * points.length);
-    return points[index] || points[0];
+    const index = Math.floor(progress * (points.length - 1));
+    return points[Math.min(index, points.length - 1)] || points[0];
   }, [points, progress]);
 
   return { points, currentPoint };

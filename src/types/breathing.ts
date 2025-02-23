@@ -10,9 +10,18 @@ export interface BreathingTechnique {
     postExhaleHold?: number;
   };
   benefits: string[];
+  categories: string[];
 }
 
 export interface GraphPoint {
   x: number;
   y: number;
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  techniques: string[];
 }
